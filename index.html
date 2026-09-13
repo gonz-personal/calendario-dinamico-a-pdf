@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Calendario Dinámico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<div class="app-shell">
+
+  <header class="toolbar">
+    <div class="toolbar-group">
+      <button class="icon-btn" id="prevMonthBtn" title="Mes anterior" aria-label="Mes anterior">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      </button>
+      <button class="btn-ghost" id="todayBtn">Hoy</button>
+      <button class="icon-btn" id="nextMonthBtn" title="Mes siguiente" aria-label="Mes siguiente">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M8.59 16.59 10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+      </button>
+      <button class="btn-ghost" id="jumpBtn">Ir a mes…</button>
+    </div>
+
+    <div class="toolbar-group">
+      <button class="icon-btn" id="themeToggleBtn" title="Cambiar tema" aria-label="Cambiar tema"></button>
+      <button class="btn-ghost" id="settingsBtn">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.5.5 0 0 0 .12-.61l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96c-.5-.38-1.04-.7-1.62-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54c-.58.24-1.13.57-1.62.94l-2.39-.96a.5.5 0 0 0-.6.22L2.66 8.87a.5.5 0 0 0 .12.61l2.03 1.58c-.05.3-.08.63-.08.94s.02.64.07.94l-2.03 1.58a.5.5 0 0 0-.12.61l1.92 3.32c.14.24.4.32.64.22l2.39-.96c.5.38 1.04.7 1.62.94l.36 2.54c.05.24.25.42.5.42h3.84c.25 0 .46-.18.5-.42l.36-2.54c.58-.24 1.12-.56 1.62-.94l2.39.96c.24.1.5.02.64-.22l1.92-3.32a.5.5 0 0 0-.12-.61zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7"/></svg>
+        Ajustes
+      </button>
+      <button class="btn-primary" id="pdfBtn">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M5 20h14v-2H5zm7-18-5.5 5.5 1.41 1.41L11 5.83V16h2V5.83l3.09 3.08 1.41-1.41z"/></svg>
+        Generar PDF
+      </button>
+    </div>
+  </header>
+
+  <main class="calendar-stage">
+    <div id="calendarCapture" class="calendar-card">
+      <div class="calendar-brand-header">
+        <div class="brand-block">
+          <div class="brand-logo" id="brandLogo">📅</div>
+          <div class="brand-copy">
+            <h1 id="brandName">Mi Empresa</h1>
+            <p id="brandSubtitle">CALENDARIO OPERATIVO MENSUAL</p>
+          </div>
+        </div>
+        <div class="month-block">
+          <div class="month-name" id="monthName">Septiembre</div>
+          <div class="month-year-row">
+            <span class="month-year" id="monthYear">2026</span>
+            <span class="month-icon">🗓️</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="weekday-row" id="weekdayRow"></div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+    </div>
+  </main>
+
+</div>
+
+<!-- Event add/edit modal -->
+<div class="modal-overlay hidden" id="eventModalOverlay">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <h2 id="eventModalTitle">Nuevo evento</h2>
+      <button class="icon-btn" id="eventModalClose" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="field">
+        <span>Fecha</span>
+        <input type="date" id="eventDateInput" />
+      </label>
+
+      <label class="field">
+        <span>Tipo de evento</span>
+        <div class="type-select-row">
+          <select id="eventTypeSelect"></select>
+          <button class="icon-btn" id="addTypeQuickBtn" title="Nuevo tipo" aria-label="Nuevo tipo de evento">+</button>
+        </div>
+      </label>
+
+      <label class="field">
+        <span>Descripción / etiqueta <em>(opcional)</em></span>
+        <input type="text" id="eventLabelInput" placeholder="Ej. Carlo, Suspensión de labores…" maxlength="60" />
+      </label>
+
+      <label class="field checkbox-field">
+        <input type="checkbox" id="eventHasTimeCheckbox" />
+        <span>Tiene hora</span>
+      </label>
+
+      <label class="field" id="eventTimeField">
+        <span>Hora</span>
+        <input type="time" id="eventTimeInput" value="09:30" />
+      </label>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-danger" id="deleteEventBtn" hidden>Eliminar</button>
+      <div class="spacer"></div>
+      <button class="btn-ghost" id="cancelEventBtn">Cancelar</button>
+      <button class="btn-primary" id="saveEventBtn">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Day detail modal (overflow / multiple events) -->
+<div class="modal-overlay hidden" id="dayModalOverlay">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <h2 id="dayModalTitle">Eventos del día</h2>
+      <button class="icon-btn" id="dayModalClose" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="dayModalList" class="day-modal-list"></div>
+    </div>
+    <div class="modal-footer">
+      <div class="spacer"></div>
+      <button class="btn-primary" id="dayModalAddBtn">+ Agregar evento</button>
+    </div>
+  </div>
+</div>
+
+<!-- Jump to month modal -->
+<div class="modal-overlay hidden" id="jumpModalOverlay">
+  <div class="modal modal-small" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <h2>Ir a mes</h2>
+      <button class="icon-btn" id="jumpModalClose" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="field">
+        <span>Mes</span>
+        <select id="jumpMonthSelect"></select>
+      </label>
+      <label class="field">
+        <span>Año</span>
+        <input type="number" id="jumpYearInput" min="1970" max="2200" />
+      </label>
+    </div>
+    <div class="modal-footer">
+      <div class="spacer"></div>
+      <button class="btn-ghost" id="jumpCancelBtn">Cancelar</button>
+      <button class="btn-primary" id="jumpGoBtn">Ir</button>
+    </div>
+  </div>
+</div>
+
+<!-- Settings modal -->
+<div class="modal-overlay hidden" id="settingsModalOverlay">
+  <div class="modal modal-large" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <h2>Ajustes</h2>
+      <button class="icon-btn" id="settingsModalClose" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <section class="settings-section">
+        <h3>Marca</h3>
+        <label class="field">
+          <span>Nombre</span>
+          <input type="text" id="brandNameInput" maxlength="40" />
+        </label>
+        <label class="field">
+          <span>Subtítulo</span>
+          <input type="text" id="brandSubtitleInput" maxlength="60" />
+        </label>
+        <div class="field">
+          <span>Logo</span>
+          <div class="logo-editor">
+            <div class="logo-preview" id="logoPreview">📅</div>
+            <input type="text" id="logoEmojiInput" maxlength="4" placeholder="Emoji" />
+            <label class="btn-ghost file-btn">
+              Subir imagen
+              <input type="file" id="logoFileInput" accept="image/*" hidden />
+            </label>
+            <button class="btn-ghost" id="logoRemoveBtn">Quitar</button>
+          </div>
+        </div>
+        <label class="field">
+          <span>Color de acento</span>
+          <input type="color" id="accentColorInput" />
+        </label>
+      </section>
+
+      <section class="settings-section">
+        <h3>Apariencia</h3>
+        <div class="theme-options" id="themeOptions">
+          <button class="theme-option" data-theme="light">☀️ Claro</button>
+          <button class="theme-option" data-theme="dark">🌙 Oscuro</button>
+          <button class="theme-option" data-theme="system">🖥️ Sistema</button>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <div class="settings-section-header">
+          <h3>Tipos de evento</h3>
+          <button class="btn-ghost" id="addTypeBtn">+ Nuevo tipo</button>
+        </div>
+        <div id="typesList" class="types-list"></div>
+      </section>
+
+      <section class="settings-section">
+        <h3>Datos</h3>
+        <div class="data-actions">
+          <button class="btn-ghost" id="exportDataBtn">Exportar respaldo (.json)</button>
+          <label class="btn-ghost file-btn">
+            Importar respaldo
+            <input type="file" id="importDataInput" accept="application/json" hidden />
+          </label>
+        </div>
+        <p class="hint-text">Los datos se guardan solo en este navegador. Exporta un respaldo antes de borrar el caché o cambiar de dispositivo.</p>
+      </section>
+
+    </div>
+    <div class="modal-footer">
+      <div class="spacer"></div>
+      <button class="btn-primary" id="settingsDoneBtn">Listo</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
