@@ -1,0 +1,7 @@
+{
+  "name": "calendario-dinamico-a-pdf",
+  "private": true,
+  "dependencies": {
+    "@vercel/functions": "latest"
+  }
+}
