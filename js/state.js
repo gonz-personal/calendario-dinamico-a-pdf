@@ -13,6 +13,7 @@ function defaultState() {
     },
     accentColor: "#a9822f",
     theme: "light", // "light" | "dark" | "system"
+    layout: "classic", // "classic" | "modern" | "bold"
     eventTypes: [
       { id: "capacitacion", name: "Capacitación", icon: "📖", color: "#2563eb" },
       { id: "guardia", name: "Guardia", icon: "🛡️", color: "#b8860b" },
@@ -84,6 +85,11 @@ export function setAccentColor(color) {
 
 export function setTheme(theme) {
   state.theme = theme;
+  notify();
+}
+
+export function setLayout(layout) {
+  state.layout = layout;
   notify();
 }
 

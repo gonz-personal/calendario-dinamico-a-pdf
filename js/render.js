@@ -25,6 +25,15 @@ export function renderMonthTitle() {
 export function renderWeekdayRow() {
   const row = document.getElementById("weekdayRow");
   row.innerHTML = WEEKDAY_NAMES.map((d) => `<div>${d}</div>`).join("");
+  const { layout, accentColor } = getState();
+  row.style.backgroundColor = layout === "bold" ? hexToRgba(accentColor, 0.1) : "";
+}
+
+export function applyLayoutClass() {
+  const { layout } = getState();
+  const card = document.getElementById("calendarCapture");
+  card.classList.remove("layout-classic", "layout-modern", "layout-bold");
+  card.classList.add(`layout-${layout}`);
 }
 
 function typeById(id) {
@@ -32,6 +41,7 @@ function typeById(id) {
 }
 
 function buildChip(evt) {
+  const { layout } = getState();
   const type = typeById(evt.typeId);
   const color = type ? type.color : "#6b7280";
   const icon = type ? type.icon : "🔖";
@@ -44,9 +54,14 @@ function buildChip(evt) {
     : "";
   const chip = document.createElement("div");
   chip.className = "event-chip";
-  chip.style.setProperty("--chip-color", color);
-  chip.style.backgroundColor = hexToRgba(color, 0.12);
   chip.dataset.eventId = evt.id;
+  if (layout === "bold") {
+    chip.style.backgroundColor = color;
+    chip.style.setProperty("--chip-color", "#ffffff");
+  } else {
+    chip.style.backgroundColor = hexToRgba(color, layout === "modern" ? 0.16 : 0.12);
+    chip.style.setProperty("--chip-color", color);
+  }
   chip.innerHTML = `${timeHtml}<div class="chip-main">${icon} ${escapeHtml(name)}</div>${labelHtml}`;
   return chip;
 }
@@ -150,6 +165,7 @@ export function renderGrid(handlers) {
 }
 
 export function renderAll(handlers) {
+  applyLayoutClass();
   renderBrandHeader();
   renderMonthTitle();
   renderWeekdayRow();

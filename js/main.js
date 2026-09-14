@@ -1,7 +1,7 @@
 import { getState, setView, setTheme } from "./state.js";
 import { applyTheme } from "./theme.js";
 import { renderAll } from "./render.js";
-import { initModals, openEventModal, openDayModal, openJumpModal, openSettingsModal } from "./modals.js";
+import { initModals, openEventModal, openDayModal, openJumpModal, openLayoutModal, openSettingsModal } from "./modals.js";
 import { exportCalendarToPdf } from "./pdf.js";
 
 const handlers = {
@@ -32,6 +32,7 @@ function initToolbar() {
     rerender();
   });
   document.getElementById("jumpBtn").addEventListener("click", openJumpModal);
+  document.getElementById("layoutBtn").addEventListener("click", openLayoutModal);
   document.getElementById("settingsBtn").addEventListener("click", openSettingsModal);
   document.getElementById("pdfBtn").addEventListener("click", exportCalendarToPdf);
   document.getElementById("themeToggleBtn").addEventListener("click", () => {

@@ -27,6 +27,10 @@
 
     <div class="toolbar-group">
       <button class="icon-btn" id="themeToggleBtn" title="Cambiar tema" aria-label="Cambiar tema"></button>
+      <button class="btn-ghost" id="layoutBtn">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M4 4h7v7H4V4zm9 0h7v4h-7V4zm0 6h7v10h-7V10zM4 13h7v7H4v-7z"/></svg>
+        Plantilla
+      </button>
       <button class="btn-ghost" id="settingsBtn">
         <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.5.5 0 0 0 .12-.61l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96c-.5-.38-1.04-.7-1.62-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54c-.58.24-1.13.57-1.62.94l-2.39-.96a.5.5 0 0 0-.6.22L2.66 8.87a.5.5 0 0 0 .12.61l2.03 1.58c-.05.3-.08.63-.08.94s.02.64.07.94l-2.03 1.58a.5.5 0 0 0-.12.61l1.92 3.32c.14.24.4.32.64.22l2.39-.96c.5.38 1.04.7 1.62.94l.36 2.54c.05.24.25.42.5.42h3.84c.25 0 .46-.18.5-.42l.36-2.54c.58-.24 1.12-.56 1.62-.94l2.39.96c.24.1.5.02.64-.22l1.92-3.32a.5.5 0 0 0-.12-.61zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7"/></svg>
         Ajustes
@@ -147,6 +151,83 @@
       <div class="spacer"></div>
       <button class="btn-ghost" id="jumpCancelBtn">Cancelar</button>
       <button class="btn-primary" id="jumpGoBtn">Ir</button>
+    </div>
+  </div>
+</div>
+
+<!-- Layout / template picker modal -->
+<div class="modal-overlay hidden" id="layoutModalOverlay">
+  <div class="modal modal-large" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <h2>Elegir plantilla</h2>
+      <button class="icon-btn" id="layoutModalClose" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="hint-text">Esta plantilla se usa tanto en pantalla como al generar el PDF.</p>
+      <div class="layout-options" id="layoutOptions">
+
+        <button class="layout-option-card" data-layout="classic">
+          <div class="layout-thumb thumb-classic">
+            <div class="thumb-header">
+              <div class="thumb-brand">
+                <span class="thumb-logo"></span>
+                <span class="thumb-lines"><span></span><span></span></span>
+              </div>
+              <span class="thumb-month"></span>
+            </div>
+            <div class="thumb-grid">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="layout-option-label">
+            <strong>Clásico</strong>
+            <span>Serif elegante, acento dorado</span>
+          </div>
+        </button>
+
+        <button class="layout-option-card" data-layout="modern">
+          <div class="layout-thumb thumb-modern">
+            <div class="thumb-header">
+              <div class="thumb-brand">
+                <span class="thumb-logo"></span>
+                <span class="thumb-lines"><span></span><span></span></span>
+              </div>
+              <span class="thumb-month"></span>
+            </div>
+            <div class="thumb-grid">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="layout-option-label">
+            <strong>Moderno</strong>
+            <span>Minimalista, tipografía sans</span>
+          </div>
+        </button>
+
+        <button class="layout-option-card" data-layout="bold">
+          <div class="layout-thumb thumb-bold">
+            <div class="thumb-header">
+              <div class="thumb-brand">
+                <span class="thumb-logo"></span>
+                <span class="thumb-lines"><span></span><span></span></span>
+              </div>
+              <span class="thumb-month"></span>
+            </div>
+            <div class="thumb-grid">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="layout-option-label">
+            <strong>Corporativo</strong>
+            <span>Encabezado en color, alto contraste</span>
+          </div>
+        </button>
+
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="spacer"></div>
+      <button class="btn-primary" id="layoutModalDoneBtn">Listo</button>
     </div>
   </div>
 </div>

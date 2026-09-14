@@ -386,6 +386,96 @@ button, input, select {
 }
 .more-events-btn:hover { color: var(--accent); }
 
+/* ---------- Layout: Moderno ---------- */
+
+.layout-modern.calendar-card {
+  position: relative;
+  padding-top: 32px;
+}
+.layout-modern.calendar-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 16px 16px 0 0;
+}
+
+.layout-modern .brand-logo {
+  background: transparent;
+  border: none;
+  width: auto;
+  height: auto;
+  font-size: 26px;
+}
+.layout-modern .brand-copy h1 {
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+.layout-modern .brand-copy p {
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+}
+
+.layout-modern .month-name {
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-size: 30px;
+}
+
+.layout-modern .day-cell { border-right-color: transparent; }
+
+.layout-modern .day-cell.is-today .day-number {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+}
+
+.layout-modern .event-chip {
+  border-left: none;
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+/* ---------- Layout: Corporativo ---------- */
+
+.layout-bold .calendar-brand-header {
+  background: var(--accent);
+  margin: -28px -32px 6px;
+  padding: 24px 32px;
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+}
+.layout-bold .brand-logo {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.layout-bold .brand-copy h1,
+.layout-bold .brand-copy p,
+.layout-bold .month-name,
+.layout-bold .month-year {
+  color: #fff;
+}
+.layout-bold .brand-copy p { opacity: 0.85; }
+.layout-bold .month-name { font-weight: 800; }
+
+.layout-bold .day-cell.is-today .day-number {
+  border-radius: 999px;
+}
+
+.layout-bold .event-chip {
+  border-left: none;
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-weight: 600;
+}
+.layout-bold .event-chip .chip-time { color: rgba(255, 255, 255, 0.85); }
+.layout-bold .event-chip .chip-label { color: rgba(255, 255, 255, 0.85); }
+
 /* ---------- Modals ---------- */
 
 .modal-overlay {
@@ -515,6 +605,80 @@ button, input, select {
 .day-modal-item .item-text { display: flex; flex-direction: column; gap: 2px; }
 .day-modal-item .item-title { font-weight: 700; font-size: 13.5px; color: var(--item-color, var(--text)); }
 .day-modal-item .item-sub { font-size: 12px; color: var(--text-muted); }
+
+/* ---------- Layout picker ---------- */
+
+.layout-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.layout-option-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-muted);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+}
+.layout-option-card:hover { border-color: var(--border-strong); }
+.layout-option-card.active { border: 2px solid var(--accent); padding: 9px; }
+
+.layout-thumb {
+  height: 92px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.thumb-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 8px;
+  flex-shrink: 0;
+}
+
+.thumb-brand { display: flex; align-items: center; gap: 4px; }
+.thumb-logo { width: 12px; height: 12px; border-radius: 3px; background: var(--border-strong); flex-shrink: 0; }
+.thumb-lines { display: flex; flex-direction: column; gap: 2px; }
+.thumb-lines span { display: block; height: 3px; border-radius: 2px; background: var(--text-faint); }
+.thumb-lines span:first-child { width: 26px; }
+.thumb-lines span:last-child { width: 16px; opacity: 0.7; }
+.thumb-month { width: 22px; height: 8px; border-radius: 2px; background: var(--accent); }
+
+.thumb-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+  padding: 0 8px 8px;
+}
+.thumb-grid span { background: var(--surface-muted); border: 1px solid var(--border); border-radius: 2px; }
+
+.thumb-classic .thumb-logo { border: 1px solid var(--border-strong); background: var(--surface-muted); }
+
+.thumb-modern .layout-thumb::before { content: ""; display: block; height: 3px; background: var(--accent); flex-shrink: 0; }
+.thumb-modern .thumb-month { border-radius: 3px; }
+.thumb-modern .thumb-logo { background: transparent; }
+
+.thumb-bold .thumb-header { background: var(--accent); }
+.thumb-bold .thumb-lines span { background: rgba(255, 255, 255, 0.9); }
+.thumb-bold .thumb-lines span:last-child { opacity: 0.7; }
+.thumb-bold .thumb-month { background: rgba(255, 255, 255, 0.9); }
+.thumb-bold .thumb-logo { background: rgba(255, 255, 255, 0.35); }
+
+.layout-option-label { display: flex; flex-direction: column; gap: 1px; }
+.layout-option-label strong { font-size: 13px; color: var(--text); }
+.layout-option-label span { font-size: 11.5px; color: var(--text-muted); }
 
 /* ---------- Settings ---------- */
 

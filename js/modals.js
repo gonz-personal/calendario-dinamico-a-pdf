@@ -1,5 +1,5 @@
 import {
-  getState, updateBrand, setAccentColor, setTheme, setView,
+  getState, updateBrand, setAccentColor, setTheme, setView, setLayout,
   addEventType, updateEventType, deleteEventType,
   getEventsForDate, upsertEvent, deleteEvent, replaceAllData, exportData,
 } from "./state.js";
@@ -213,6 +213,39 @@ function initJumpModal() {
   });
 }
 
+/* ---------------- Layout picker modal ---------------- */
+
+function renderLayoutOptions() {
+  const { layout } = getState();
+  document.querySelectorAll(".layout-option-card").forEach((card) => {
+    card.classList.toggle("active", card.dataset.layout === layout);
+  });
+}
+
+export function openLayoutModal() {
+  renderLayoutOptions();
+  el("layoutModalOverlay").classList.remove("hidden");
+}
+
+function closeLayoutModal() {
+  el("layoutModalOverlay").classList.add("hidden");
+}
+
+function initLayoutModal() {
+  el("layoutModalClose").addEventListener("click", closeLayoutModal);
+  el("layoutModalDoneBtn").addEventListener("click", closeLayoutModal);
+  el("layoutModalOverlay").addEventListener("click", (e) => {
+    if (e.target.id === "layoutModalOverlay") closeLayoutModal();
+  });
+  document.querySelectorAll(".layout-option-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      setLayout(card.dataset.layout);
+      renderLayoutOptions();
+      rerender();
+    });
+  });
+}
+
 /* ---------------- Settings modal ---------------- */
 
 function renderThemeOptions() {
@@ -377,12 +410,13 @@ export function initModals(rerenderFn) {
   initEventModal();
   initDayModal();
   initJumpModal();
+  initLayoutModal();
   initSettingsModal();
 
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Escape") return;
     [
-      "eventModalOverlay", "dayModalOverlay", "jumpModalOverlay", "settingsModalOverlay",
+      "eventModalOverlay", "dayModalOverlay", "jumpModalOverlay", "layoutModalOverlay", "settingsModalOverlay",
     ].forEach((id) => {
       const overlay = el(id);
       if (!overlay.classList.contains("hidden")) overlay.classList.add("hidden");
