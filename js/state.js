@@ -6,10 +6,10 @@ function defaultState() {
   const now = new Date();
   return {
     brand: {
-      name: "Mi Empresa",
-      subtitle: "Calendario operativo mensual",
+      name: "FINCA",
+      subtitle: "Inmuebles · Calendario operativo mensual",
       logoType: "emoji", // "emoji" | "image"
-      logoValue: "📅",
+      logoValue: "🏢",
     },
     accentColor: "#a9822f",
     theme: "light", // "light" | "dark" | "system"
