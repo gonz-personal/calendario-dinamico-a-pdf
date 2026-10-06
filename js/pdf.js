@@ -21,6 +21,9 @@ export async function exportCalendarToPdf() {
       scale: 2,
       backgroundColor: bg,
       useCORS: true,
+      onclone: (clonedDoc) => {
+        clonedDoc.querySelectorAll(".is-today").forEach((el) => el.classList.remove("is-today"));
+      },
     });
 
     const imgData = canvas.toDataURL("image/png");
