@@ -1,5 +1,5 @@
 import { getState, getEventsForDate } from "./state.js";
-import { MONTH_NAMES, WEEKDAY_NAMES, dateKey, daysInMonth, todayKey, formatTime12h, hexToRgba } from "./utils.js";
+import { MONTH_NAMES, WEEKDAY_NAMES, dateKey, daysInMonth, formatTime12h, hexToRgba } from "./utils.js";
 
 const MAX_VISIBLE_EVENTS = 3;
 
@@ -81,7 +81,6 @@ export function renderGrid(handlers) {
   const firstWeekday = new Date(year, month, 1).getDay();
   const totalDays = daysInMonth(year, month);
   const prevMonthDays = daysInMonth(year, month === 0 ? 11 : month - 1);
-  const today = todayKey();
 
   const cells = [];
 
@@ -104,7 +103,7 @@ export function renderGrid(handlers) {
   cells.forEach((cell) => {
     const key = dateKey(cell.year, cell.month, cell.day);
     const cellEl = document.createElement("div");
-    cellEl.className = "day-cell" + (cell.outside ? " outside" : "") + (key === today ? " is-today" : "");
+    cellEl.className = "day-cell" + (cell.outside ? " outside" : "");
     cellEl.dataset.date = key;
 
     const numberEl = document.createElement("div");

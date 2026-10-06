@@ -284,18 +284,6 @@ button, input, select {
   background: var(--surface-muted);
 }
 
-.day-cell.is-today .day-number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 22px;
-  height: 22px;
-  padding: 0 5px;
-  border-radius: 7px;
-  background: var(--accent);
-  color: #fff;
-}
-
 .day-number {
   font-size: 13px;
   font-weight: 600;
@@ -429,12 +417,6 @@ button, input, select {
 
 .layout-modern .day-cell { border-right-color: transparent; }
 
-.layout-modern .day-cell.is-today .day-number {
-  background: transparent;
-  border: 2px solid var(--accent);
-  color: var(--accent);
-}
-
 .layout-modern .event-chip {
   border-left: none;
   border-radius: 999px;
@@ -462,10 +444,6 @@ button, input, select {
 }
 .layout-bold .brand-copy p { opacity: 0.85; }
 .layout-bold .month-name { font-weight: 800; }
-
-.layout-bold .day-cell.is-today .day-number {
-  border-radius: 999px;
-}
 
 .layout-bold .event-chip {
   border-left: none;
